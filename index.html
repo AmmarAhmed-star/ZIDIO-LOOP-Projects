@@ -1,0 +1,18 @@
+<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>LOOP AI 🤖 - Ammar Ahmed</title>
+<style>
+*{box-sizing:border-box}body{font-family:'Segoe UI',Arial;margin:0;background:#f0f2ff}
+.hero{background:linear-gradient(135deg,#667eea,#764ba2,#f093fb);color:#fff;padding:32px 20px;text-align:center;border-radius:0 0 28px 28px;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.hero h1{font-size:32px;margin:0}.hero p{opacity:.9}
+.wrap{max-width:900px;margin:0 auto;padding:18px}
+.card{background:#fff;border-radius:18px;padding:18px;margin:14px 0;box-shadow:0 6px 20px rgba(0,0,0,.08);border-left:6px solid #ff6b6b}
+button{background:linear-gradient(90deg,#ff6b6b,#ffa502);color:#fff;border:0;padding:12px 18px;border-radius:999px;margin:5px;cursor:pointer;font-weight:700;box-shadow:0 4px 12px rgba(255,107,107,.4)}
+button.blue{background:linear-gradient(90deg,#4facfe,#00f2fe)}button.green{background:linear-gradient(90deg,#43e97b,#38f9d7)}button.purple{background:linear-gradient(90deg,#a18cd1,#fbc2eb);color:#333}
+input,select,textarea{padding:12px;margin:5px;border:2px solid #e5e7eb;border-radius:12px;width:92%;font-size:15px}
+.bar{display:inline-block;width:28px;margin:2px;border-radius:8px 8px 0 0;text-align:center;color:#fff;font-weight:700}
+.pill{display:inline-block;padding:6px 12px;border-radius:999px;background:#fff3cd;margin:3px;font-size:13px;font-weight:700}
+.badge{background:#ff4757;color:#fff;padding:4px 10px;border-radius:999px;font-size:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}}
+</style></head><body>
+<div class='hero'><div style='font-size:52px'>🤖</div><h1>LOOP AI 🤖</h1><p>By Ammar Ahmed | Live on GitHub Pages | Made with ❤️</p><div><span class='pill'>🔥 LIVE</span><span class='pill'>⭐ 4.8 Rating</span><span class='pill'>🚀 2026</span></div></div>
+<div class='wrap'><div class='card'><h2>📊 Dashboard - 1284 Feedbacks</h2><p>😊 Positive 68% | ⭐ Avg 4.2 | 🔥 Top Theme: Delivery</p><input id='fs' placeholder='🔍 Search feedback...' oninput='fr()'><div id='fb'></div><input id='fn' placeholder='Your Name'><input id='fm' placeholder='Feedback...'><button onclick='addF()'>Add Feedback +</button><h3>🤖 Ask LOOP AI</h3><input id='q' placeholder='Ask: top issue?'><button class='purple' onclick='ask()'>Ask AI ✨</button><p id='ans'></p></div></div><script>let fbs=[{n:'Priya',m:'Great app, fast delivery',s:'Positive'},{n:'Rohit',m:'Delivery was late',s:'Negative'},{n:'Sana',m:'Good quality fruits',s:'Positive'}];function fr(){let q=document.getElementById('fs').value.toLowerCase();document.getElementById('fb').innerHTML='';fbs.filter(f=>f.m.toLowerCase().includes(q)||f.n.toLowerCase().includes(q)).forEach(f=>{document.getElementById('fb').innerHTML+=`<p><b>${f.n}</b> - ${f.m} <span class='badge'>${f.s}</span></p>`});}function addF(){let n=document.getElementById('fn').value||'Guest';let m=document.getElementById('fm').value;if(!m)return;fbs.push({n,m,s:'Positive'});fr();}function ask(){let q=document.getElementById('q').value.toLowerCase();let a='Based on feedback: 68% Positive. Top theme Delivery speed.';if(q.includes('issue'))a='Top issue: Delivery delay 12% users. Fix delivery first.';document.getElementById('ans').innerText='🤖 '+a;}fr();</script></body></html>
