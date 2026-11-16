@@ -27,19 +27,63 @@
 <meta name='viewport' content='width=device-width,initial-scale=1'>
 <title>LOOP AI - Ammar Ahmed</title>
 <style>
-  .loop-auth { max-width: 720px; margin: 16px auto; }
-  .loop-auth input { width: 100%; box-sizing: border-box; margin: 6px 0; }
-  .loop-progress-bar { background: rgba(255,255,255,.15); height: 12px; border-radius: 20px; overflow: hidden; margin: 10px 0; }
-  .loop-progress-fill { background: linear-gradient(90deg,#a855f7,#22c55e); height: 100%; width: 0%; transition: .5s; }
-  .loop-top { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
-  .loop-top button { width:auto; padding:8px 14px; }
-  .lesson-row { display:flex; justify-content:space-between; align-items:center; gap:10px; background: rgba(255,255,255,.06); padding:10px 12px; border-radius:10px; margin:8px 0; text-align:left; }
-  .lesson-row button { width:auto; padding:8px 12px; margin:0; }
-  .small { opacity:.8; font-size:13px; }
-  .sync-badge { font-size:12px; background:#22c55e; color:#fff; padding:4px 10px; border-radius:20px; }
-  .sync-badge.offline { background:#f59e0b; }
-  .divider { text-align:center; opacity:.6; margin:10px 0; font-size:13px; }
-  .google-btn { background:#fff !important; color:#111 !important; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap');
+  *{box-sizing:border-box}
+  :root{--bg:#070812;--card:rgba(255,255,255,.06);--border:rgba(255,255,255,.12);--text:#f8fafc;--muted:#94a3b8;--violet:#7c3aed;--violet2:#a855f7;--cyan:#22d3ee;--green:#22c55e;--radius:20px}
+  body{margin:0;font-family:'Inter',system-ui,sans-serif;background:radial-gradient(900px 500px at 10% 0%,rgba(124,58,237,.35),transparent 60%),radial-gradient(800px 500px at 90% 10%,rgba(34,211,238,.22),transparent 60%),var(--bg);color:var(--text);min-height:100vh}
+  a{color:inherit}
+  /* Top Nav */
+  .topnav{max-width:1080px;margin:0 auto;padding:18px 20px;display:flex;align-items:center;justify-content:space-between}
+  .logo{font-family:'Sora',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.5px;display:flex;align-items:center;gap:10px}
+  .logo-badge{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#7c3aed,#22d3ee);display:grid;place-items:center;font-size:20px;box-shadow:0 8px 30px rgba(124,58,237,.5)}
+  .nav-links{display:flex;gap:18px;color:var(--muted);font-size:14px;font-weight:500}
+  .nav-links span{cursor:pointer}
+  .nav-links span:hover{color:#fff}
+  .nav-cta{background:#fff;color:#111;padding:9px 16px;border-radius:999px;font-weight:700;font-size:13px}
+  @media(max-width:640px){.nav-links{display:none}}
+  /* Hero */
+  .hero{max-width:1080px;margin:10px auto 0;padding:36px 20px 10px;text-align:center}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid var(--border);padding:7px 12px;border-radius:999px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#c4b5fd;font-weight:700}
+  .hero h1{font-family:'Sora',sans-serif;font-size:clamp(44px,8vw,72px);line-height:.95;margin:18px 0 12px;letter-spacing:-2.5px}
+  .hero h1 span{background:linear-gradient(90deg,#a78bfa,#22d3ee,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero p{color:var(--muted);font-size:clamp(15px,2vw,18px);line-height:1.6;max-width:620px;margin:0 auto 20px}
+  .hero-stats{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:18px}
+  .pill{background:rgba(255,255,255,.08);border:1px solid var(--border);backdrop-filter:blur(10px);padding:9px 14px;border-radius:999px;font-size:13px;font-weight:600}
+  /* Layout */
+  .wrap{max-width:1080px;margin:0 auto;padding:20px}
+  .card{background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.04));border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.35);margin-bottom:18px}
+  .card h2{font-family:'Sora',sans-serif;letter-spacing:-.5px;margin:0 0 8px}
+  .card h3{font-family:'Sora',sans-serif}
+  .loop-auth{max-width:720px;margin:16px auto}
+  .loop-auth input{width:100%;box-sizing:border-box;margin:8px 0}
+  input{background:rgba(0,0,0,.35);border:1px solid var(--border);color:#fff;padding:14px 16px;border-radius:12px;font-size:15px;outline:none;transition:.2s}
+  input:focus{border-color:#a855f7;box-shadow:0 0 0 3px rgba(168,85,247,.25);background:rgba(0,0,0,.5)}
+  input::placeholder{color:#64748b}
+  button{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(90deg,#7c3aed,#a855f7);color:#fff;font-weight:700;font-size:15px;cursor:pointer;transition:.2s;box-shadow:0 10px 25px rgba(124,58,237,.35)}
+  button:hover{transform:translateY(-1px);filter:brightness(1.1)}
+  button:active{transform:translateY(0)}
+  button:disabled{opacity:.5;cursor:not-allowed;transform:none}
+  button.purple{background:linear-gradient(90deg,#7c3aed,#22d3ee)}
+  .google-btn{background:#fff !important;color:#111 !important;box-shadow:0 10px 25px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;gap:8px}
+  .loop-progress-bar{background:rgba(255,255,255,.12);height:12px;border-radius:999px;overflow:hidden;margin:12px 0}
+  .loop-progress-fill{background:linear-gradient(90deg,#a855f7,#22d3ee,#22c55e);height:100%;width:0%;transition:.6s}
+  .loop-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .loop-top button{width:auto;padding:9px 16px}
+  .lesson-row{display:flex;justify-content:space-between;align-items:center;gap:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);padding:14px 14px;border-radius:14px;margin:10px 0;text-align:left}
+  .lesson-row button{width:auto;padding:9px 14px;margin:0}
+  .small{opacity:.85;font-size:13px;color:var(--muted);line-height:1.5}
+  .sync-badge{font-size:12px;background:#22c55e;color:#fff;padding:5px 10px;border-radius:999px;font-weight:700}
+  .sync-badge.offline{background:#f59e0b}
+  .divider{text-align:center;opacity:.6;margin:14px 0;font-size:12px;letter-spacing:.12em;font-weight:700}
+  .badge{background:rgba(34,197,94,.18);color:#86efac;border:1px solid rgba(34,197,94,.3);padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700}
+  #fb p{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);padding:12px 14px;border-radius:12px;margin:8px 0}
+  #ans{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.25);padding:14px;border-radius:12px;line-height:1.6}
+  .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+  .stat{background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center}
+  .stat b{font-size:22px;display:block}
+  .stat span{font-size:12px;color:var(--muted)}
+  @media(max-width:640px){.stats-grid{grid-template-columns:1fr 1fr}.hero{padding:24px 16px 6px}.card{padding:18px}}
+  .footer{text-align:center;color:var(--muted);font-size:13px;padding:20px 0 30px}
 </style>
 <script type="importmap">
 { "imports": {
@@ -51,11 +95,16 @@
 </head>
 <body>
 
+<div class='topnav'>
+  <div class='logo'><span class='logo-badge'>🤖</span> LOOP AI</div>
+  <div class='nav-links'><span>Learn</span><span>Feedback</span><span>Ask AI</span></div>
+  <div class='nav-cta'>● Live on GitHub</div>
+</div>
 <div class='hero'>
-  <div style='font-size:52px'>🤖</div>
-  <h1>LOOP AI 🤖</h1>
-  <p>By Ammar Ahmed | Live on GitHub Pages | Made with ❤️</p>
-  <div><span class='pill'>🔥 LIVE</span><span class='pill'>⭐ 4.8 Rating</span><span class='pill'>🚀 2026</span></div>
+  <div class='hero-eyebrow'>✦ AI Learning Platform • Built by Ammar Ahmed</div>
+  <h1>Learn AI.<br><span>Loop. Level Up.</span></h1>
+  <p>Master AI prompts, feedback analysis and real-world AI skills — with XP, levels and progress that syncs across all your devices.</p>
+  <div class='hero-stats'><span class='pill'>🔥 LIVE</span><span class='pill'>⭐ 4.8 / 5 Rating</span><span class='pill'>👥 1,284+ Learners</span><span class='pill'>🚀 2026 Edition</span></div>
 </div>
 
 <div class='wrap'>
@@ -91,7 +140,7 @@
 
   <!-- ===== FEEDBACK DASHBOARD ===== -->
   <div class='card'>
-    <h2>📊 Dashboard - <span id='fbCount'>1284</span> Feedbacks</h2>
+    <div style='display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap'><h2 style='margin:0'>📊 Feedback Intelligence</h2><span class='pill'>Live Data</span></div><div class='stats-grid'><div class='stat'><b>1,284+</b><span>Feedbacks</span></div><div class='stat'><b>68%</b><span>Positive</span></div><div class='stat'><b>4.2 ⭐</b><span>Avg Rating</span></div></div><p>😊 Positive 68% | ⭐ Avg 4.2 | 🔥 Top Theme: <b style='color:#fff'>Delivery</b> • Total shown: <span id='fbCount'>1284</span></p>
     <p>😊 Positive 68% | ⭐ Avg 4.2 | 🔥 Top Theme: Delivery</p>
     <input id='fs' placeholder='🔍 Search feedback...' oninput='fr()'>
     <div id='fb'></div>
@@ -104,7 +153,7 @@
     <p id='ans'></p>
   </div>
 </div>
-
+<div class='footer'>Made with ❤️ by <b style='color:#fff'>Ammar Ahmed</b> • LOOP AI • Zidio Internship Project • © 2026</div>
 <script type="module">
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut } from "firebase/auth";
@@ -310,22 +359,3 @@ window.addF = async function(){
   let n=document.getElementById('fn').value||'Guest';
   let m=document.getElementById('fm').value;
   if(!m) return alert('Please write your feedback first');
-  fbs.push({n,m,s:'Positive'});
-  localStorage.setItem('loop_feedbacks', JSON.stringify(fbs));
-  document.getElementById('fm').value='';
-  window.fr();
-  if(currentUser) await addXP(10);
-};
-window.ask = async function(){
-  let q=document.getElementById('q').value.toLowerCase();
-  let a='Based on feedback: 68% Positive. Top theme is delivery speed.';
-  if(q.includes('issue')) a='Top issue: Delivery delay reported by 12% of users. Fix delivery first.';
-  if(q.includes('positive')||q.includes('good')) a='68% of users are happy. Most praise is for fast delivery and product quality.';
-  if(q.includes('suggest')||q.includes('improve')||q.includes('what')) a='1. Fix delivery time 2. Improve quality checks 3. Ask happy users for reviews.';
-  document.getElementById('ans').innerText='🤖 '+a;
-  if(currentUser) await addXP(5);
-};
-window.fr();
-</script>
-<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
-</html>
