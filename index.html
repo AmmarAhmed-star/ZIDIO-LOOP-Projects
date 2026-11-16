@@ -25,8 +25,9 @@
 <link rel="stylesheet" href="loop-ai.css">
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width,initial-scale=1'>
-<title>LOOP AI - Ammar Ahmed</title>
+<title>LOOP AI 🤖 - Ammar Ahmed</title>
 <style>
+  /* Login / Progress - extra, purani CSS ko disturb nahi karega */
   .loop-auth { max-width: 720px; margin: 16px auto; }
   .loop-auth input { width: 100%; box-sizing: border-box; margin: 6px 0; }
   .loop-progress-bar { background: rgba(255,255,255,.15); height: 12px; border-radius: 20px; overflow: hidden; margin: 10px 0; }
@@ -36,18 +37,7 @@
   .lesson-row { display:flex; justify-content:space-between; align-items:center; gap:10px; background: rgba(255,255,255,.06); padding:10px 12px; border-radius:10px; margin:8px 0; text-align:left; }
   .lesson-row button { width:auto; padding:8px 12px; margin:0; }
   .small { opacity:.8; font-size:13px; }
-  .sync-badge { font-size:12px; background:#22c55e; color:#fff; padding:4px 10px; border-radius:20px; }
-  .sync-badge.offline { background:#f59e0b; }
-  .divider { text-align:center; opacity:.6; margin:10px 0; font-size:13px; }
-  .google-btn { background:#fff !important; color:#111 !important; }
 </style>
-<script type="importmap">
-{ "imports": {
-  "firebase/app": "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js",
-  "firebase/auth": "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js",
-  "firebase/firestore": "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"
-}}
-</script>
 </head>
 <body>
 
@@ -62,181 +52,106 @@
 
   <!-- ===== LOGIN BOX ===== -->
   <div id='loginBox' class='card loop-auth'>
-    <h2>👋 Login to LOOP AI</h2>
-    <p class="small">Login with Google or Email. Your progress will sync on any device - phone, laptop, anywhere.</p>
-    <button class="google-btn" onclick='loginWithGoogle()'>Continue with Google 🔍</button>
-    <div class="divider">— OR LOGIN WITH EMAIL —</div>
-    <input id='loginName' placeholder='Your Name - e.g. Ammar'>
-    <input id='loginEmail' type="email" placeholder='Email'>
-    <input id='loginPassword' type="password" placeholder='Password (min 6 characters)'>
-    <button onclick='handleEmailLogin(false)'>Login / Create Account 🚀</button>
-    <p class="small" id="authStatus"></p>
-    <p class="small">New user? Just enter name + email + password and click the button - your account will be created automatically.</p>
+    <h2>👋 Login Karo - LOOP AI</h2>
+    <p class="small">Naam daalo, progress auto-save hoga. Browser band karke bhi wapas aaoge to sab wahi milega.</p>
+    <input id='loginName' placeholder='Tera Naam - jaise Ammar'>
+    <input id='loginEmail' placeholder='Email (optional)'>
+    <button onclick='handleLogin()'>Start Learning 🚀</button>
   </div>
 
   <!-- ===== USER DASHBOARD + PROGRESS ===== -->
   <div id='dashboardBox' class='card loop-auth' style='display:none'>
     <div class='loop-top'>
       <h2 style='margin:0'>Welcome, <span id='userName'>Guest</span> 👋</h2>
-      <span><span id="syncBadge" class="sync-badge">● Synced</span> <button onclick='logoutUser()' style='background:#444'>Logout</button></span>
+      <button onclick='logoutUser()' style='background:#444'>Logout</button>
     </div>
-    <p><b id='userLevel'>Level 1</b> | <span id='userXP'>0 XP</span> | 🔥 Streak: <span id='userStreak'>1</span> day | ✅ Lessons: <span id='doneCount'>0</span>/4</p>
-    <p class="small">Logged in as: <span id="userEmail"></span></p>
+    <p><b id='userLevel'>Level 1</b> | <span id='userXP'>0 XP</span> | 🔥 Streak: <span id='userStreak'>1</span> din | ✅ Lessons: <span id='doneCount'>0</span>/4</p>
     <div class='loop-progress-bar'><div id='xpBar' class='loop-progress-fill'></div></div>
-    <p class='small'>Each lesson = XP, Every 100 XP = Level Up. Add feedback = +10 XP, Ask AI = +5 XP.</p>
+    <p class='small'>Har lesson = XP, Har 100 XP = Level Up. Feedback add karne pe +10 XP, AI se puchne pe +5 XP.</p>
+
     <h3 style='text-align:left'>📚 Lessons:</h3>
     <div id='lessonList'></div>
     <button onclick='resetProgress()' style='background:#444'>Reset Progress</button>
   </div>
 
-  <!-- ===== FEEDBACK DASHBOARD ===== -->
+  <!-- ===== ORIGINAL FEEDBACK DASHBOARD ===== -->
   <div class='card'>
     <h2>📊 Dashboard - <span id='fbCount'>1284</span> Feedbacks</h2>
     <p>😊 Positive 68% | ⭐ Avg 4.2 | 🔥 Top Theme: Delivery</p>
     <input id='fs' placeholder='🔍 Search feedback...' oninput='fr()'>
     <div id='fb'></div>
     <input id='fn' placeholder='Your Name'>
-    <input id='fm' placeholder='Your feedback...'>
+    <input id='fm' placeholder='Feedback...'>
     <button onclick='addF()'>Add Feedback + (+10 XP)</button>
     <h3>🤖 Ask LOOP AI</h3>
-    <input id='q' placeholder='Ask: What is the top issue?'>
+    <input id='q' placeholder='Ask: top issue?'>
     <button class='purple' onclick='ask()'>Ask AI ✨ (+5 XP)</button>
     <p id='ans'></p>
   </div>
 </div>
 
-<script type="module">
-import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
-
-// ===== FIREBASE CONFIG - Connected for LOOP AI =====
-const firebaseConfig = {
-  apiKey: "AIzaSyAMcuuNX6YXtxCbCvG5ggywmqIDN3Sd33k",
-  authDomain: "project-a6d7a1f8-6afe-45b4-b06.firebaseapp.com",
-  projectId: "project-a6d7a1f8-6afe-45b4-b06",
-  storageBucket: "project-a6d7a1f8-6afe-45b4-b06.firebasestorage.app",
-  messagingSenderId: "165729823802",
-  appId: "1:165729823802:web:adc2e5bb77cf07e14c9903",
-  measurementId: "G-LV9JGLFT5L"
-};
-
-let auth = null, db = null, firebaseReady = false;
-try {
-  if (!firebaseConfig.apiKey.includes("PASTE_")) {
-    const app = initializeApp(firebaseConfig);
-    auth = getAuth(app);
-    db = getFirestore(app);
-    firebaseReady = true;
-  }
-} catch(e) { console.log("Firebase not configured yet, using localStorage mode", e); }
-
+<script>
+// ===== LOOP AI - Login + Progress (localStorage - Plain JS) =====
 const lessons = [
-  { id: 1, title: "What is AI?", xp: 20 },
-  { id: 2, title: "How to Write Good Prompts?", xp: 30 },
-  { id: 3, title: "Build a Resume with ChatGPT", xp: 40 },
-  { id: 4, title: "How to Earn Money with AI?", xp: 50 },
+  { id: 1, title: "AI Kya Hai?", xp: 20 },
+  { id: 2, title: "Prompt Kaise Likhe?", xp: 30 },
+  { id: 3, title: "ChatGPT Se Resume Banao", xp: 40 },
+  { id: 4, title: "AI Se Paisa Kaise Kamaye?", xp: 50 },
 ];
 
-let currentUser = null;
-let currentProgress = { level: 1, xp: 0, done: [], streak: 1 };
+function getUser(){ try{ return JSON.parse(localStorage.getItem('loop_user')||'null'); }catch(e){ return null; } }
+function getProgress(){ try{ return JSON.parse(localStorage.getItem('loop_progress')||'{"level":1,"xp":0,"done":[],"streak":1}'); }catch(e){ return {level:1,xp:0,done:[],streak:1}; } }
+function saveProgress(p){ localStorage.setItem('loop_progress', JSON.stringify(p)); }
 
-function getLocalProgress(){ try{ return JSON.parse(localStorage.getItem('loop_progress')||'{"level":1,"xp":0,"done":[],"streak":1}'); }catch(e){ return {level:1,xp:0,done:[],streak:1}; } }
-function saveLocalProgress(p){ localStorage.setItem('loop_progress', JSON.stringify(p)); }
-
-async function loadProgressFromCloud(uid){
-  if(!firebaseReady) return getLocalProgress();
-  try{
-    const snap = await getDoc(doc(db, "users", uid));
-    if(snap.exists()) return snap.data().progress || getLocalProgress();
-    return getLocalProgress();
-  }catch(e){ return getLocalProgress(); }
-}
-async function saveProgressToCloud(uid, p){
-  saveLocalProgress(p);
-  if(!firebaseReady || !uid) return;
-  try{ await setDoc(doc(db, "users", uid), { progress: p, updatedAt: new Date().toISOString() }, { merge: true }); setSync(true); }
-  catch(e){ setSync(false); }
-}
-function setSync(ok){
-  const el = document.getElementById('syncBadge');
-  if(!el) return;
-  el.innerText = ok ? "● Synced" : "● Offline - Saved Locally";
-  el.className = "sync-badge" + (ok ? "" : " offline");
-}
-
-async function addXP(amount){
-  currentProgress.xp += amount;
-  let newLevel = Math.floor(currentProgress.xp/100)+1;
-  if(newLevel > currentProgress.level){ currentProgress.level = newLevel; alert(`Level Up! You are now on Level ${currentProgress.level} 🔥`); }
-  await saveProgressToCloud(currentUser?.uid, currentProgress);
-  updateProgressUI();
-}
-
-window.loginWithGoogle = async function(){
-  if(!firebaseReady) return alert("Firebase is not configured yet!");
-  try{
-    document.getElementById('authStatus').innerText = "Opening Google login... Please wait, you will be redirected.";
-    const provider = new GoogleAuthProvider();
-    // Redirect works on mobile, Popup gets blocked on mobile Chrome
-    await signInWithRedirect(auth, provider);
-  }catch(e){ 
-    document.getElementById('authStatus').innerText = "Error: " + e.message;
-    alert(e.message); 
+function addXP(amount){
+  let p = getProgress();
+  p.xp += amount;
+  let newLevel = Math.floor(p.xp/100)+1;
+  if(newLevel > p.level){
+    p.level = newLevel;
+    alert(`Level Up! Ab tu Level ${p.level} pe hai 🔥`);
   }
-};
+  saveProgress(p);
+  updateProgressUI();
+  return p;
+}
 
-// Check if user is coming back from Google redirect
-getRedirectResult(auth).catch(e=>{
-  if(e.code && e.code !== 'auth/no-auth-event') document.getElementById('authStatus').innerText = "Google Error: " + e.message;
-});
-
-window.handleEmailLogin = async function(){
+function handleLogin(){
   const name = document.getElementById('loginName').value.trim();
   const email = document.getElementById('loginEmail').value.trim();
-  const pass = document.getElementById('loginPassword').value.trim();
-  if(!email || !pass) return alert('Please enter email and password');
-  if(pass.length < 6) return alert('Password must be at least 6 characters');
-  document.getElementById('authStatus').innerText = "Please wait...";
-  if(!firebaseReady){
-    // OFFLINE MODE - same as before, works without Firebase
-    localStorage.setItem('loop_user', JSON.stringify({name: name || email.split('@')[0], email}));
-    currentUser = { uid: "local_" + email, displayName: name, email };
-    currentProgress = getLocalProgress();
-    document.getElementById('authStatus').innerText = "Logged in locally (Offline Mode). Add Firebase config to sync across devices.";
-    showApp(); return;
-  }
-  try{
-    let cred;
-    try{ cred = await signInWithEmailAndPassword(auth, email, pass); }
-    catch(err){ if(err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found'){ cred = await createUserWithEmailAndPassword(auth, email, pass); if(name) await updateProfile(cred.user, { displayName: name }); } else throw err; }
-    // onAuthStateChanged will handle the rest
-  }catch(e){ document.getElementById('authStatus').innerText = e.message; }
-};
+  if(!name) return alert('Bhai naam to daal');
+  localStorage.setItem('loop_user', JSON.stringify({name, email, loginAt: new Date().toISOString()}));
+  if(!localStorage.getItem('loop_progress')) saveProgress({level:1, xp:0, done:[], streak:1});
+  // Feedback wale naam me bhi auto-fill
+  document.getElementById('fn').value = name;
+  showApp();
+}
 
-window.logoutUser = async function(){
-  if(firebaseReady){ try{ await signOut(auth); }catch(e){} }
+function logoutUser(){
   localStorage.removeItem('loop_user');
   location.reload();
-};
-window.resetProgress = async function(){
-  if(!confirm('Do you want to delete all progress?')) return;
-  currentProgress = { level: 1, xp: 0, done: [], streak: 1 };
-  await saveProgressToCloud(currentUser?.uid, currentProgress);
+}
+
+function resetProgress(){
+  if(confirm('Saara progress delete kar du?')){
+    saveProgress({level:1, xp:0, done:[], streak:1});
+    showApp();
+  }
+}
+
+function completeLesson(id, xp){
+  let p = getProgress();
+  if(p.done.includes(id)) return alert('Ye to ho gaya already!');
+  p.done.push(id);
+  saveProgress(p);
+  addXP(xp);
   showApp();
-};
-window.completeLesson = async function(id, xp){
-  if(currentProgress.done.includes(id)) return alert('You have already completed this lesson!');
-  currentProgress.done.push(id);
-  await saveProgressToCloud(currentUser?.uid, currentProgress);
-  await addXP(xp);
-  showApp();
-};
+}
 
 function updateProgressUI(){
-  const p = currentProgress;
-  if(currentUser) document.getElementById('userName').innerText = currentUser.displayName || currentUser.name || "User";
-  if(currentUser?.email) document.getElementById('userEmail').innerText = currentUser.email;
+  const p = getProgress();
+  const user = getUser();
+  if(user) document.getElementById('userName').innerText = user.name;
   document.getElementById('userLevel').innerText = 'Level ' + p.level;
   document.getElementById('userXP').innerText = p.xp + ' XP';
   document.getElementById('userStreak').innerText = p.streak;
@@ -251,11 +166,11 @@ function updateProgressUI(){
 }
 
 function showApp(){
-  if(currentUser){
+  const user = getUser();
+  if(user){
     document.getElementById('loginBox').style.display='none';
     document.getElementById('dashboardBox').style.display='block';
-    const nm = currentUser.displayName || currentUser.name || "";
-    if(nm) document.getElementById('fn').value = nm;
+    document.getElementById('fn').value = user.name;
     updateProgressUI();
   } else {
     document.getElementById('loginBox').style.display='block';
@@ -263,69 +178,46 @@ function showApp(){
   }
 }
 
-// ===== AUTH STATE =====
-if(firebaseReady){
-  onAuthStateChanged(auth, async (user)=>{
-    if(user){
-      currentUser = user;
-      // Migrate local progress to cloud if cloud is empty
-      const cloud = await loadProgressFromCloud(user.uid);
-      const local = getLocalProgress();
-      // Keep the higher XP
-      currentProgress = (local.xp > (cloud.xp||0)) ? local : cloud;
-      if(local.xp > (cloud.xp||0)) await saveProgressToCloud(user.uid, currentProgress);
-      localStorage.setItem('loop_user', JSON.stringify({name: user.displayName||"", email: user.email}));
-      showApp();
-    } else {
-      // Check old local login
-      const old = JSON.parse(localStorage.getItem('loop_user')||'null');
-      if(old && !firebaseReady){ currentUser = old; currentProgress = getLocalProgress(); }
-      showApp();
-    }
-  });
-} else {
-  // No Firebase yet - use old local login
-  const old = JSON.parse(localStorage.getItem('loop_user')||'null');
-  if(old){ currentUser = old; currentProgress = getLocalProgress(); }
-  showApp();
-}
-
-// ===== FEEDBACK =====
+// ===== ORIGINAL FEEDBACK LOGIC (with localStorage save) =====
 let fbs = [];
 try{
   const savedFbs = JSON.parse(localStorage.getItem('loop_feedbacks')||'null');
   if(savedFbs && savedFbs.length) fbs = savedFbs;
   else fbs = [{n:'Priya',m:'Great app, fast delivery',s:'Positive'},{n:'Rohit',m:'Delivery was late',s:'Negative'},{n:'Sana',m:'Good quality fruits',s:'Positive'}];
-}catch(e){ fbs = [{n:'Priya',m:'Great app, fast delivery',s:'Positive'},{n:'Rohit',m:'Delivery was late',s:'Negative'},{n:'Sana',m:'Good quality fruits',s:'Positive'}]; }
+}catch(e){
+  fbs = [{n:'Priya',m:'Great app, fast delivery',s:'Positive'},{n:'Rohit',m:'Delivery was late',s:'Negative'},{n:'Sana',m:'Good quality fruits',s:'Positive'}];
+}
 
-window.fr = function(){
+function fr(){
   let q=document.getElementById('fs').value.toLowerCase();
   document.getElementById('fb').innerHTML='';
   fbs.filter(f=>f.m.toLowerCase().includes(q)||f.n.toLowerCase().includes(q)).forEach(f=>{
     document.getElementById('fb').innerHTML+=`<p><b>${f.n}</b> - ${f.m} <span class='badge'>${f.s}</span></p>`
   });
   document.getElementById('fbCount').innerText = 1284 + fbs.length;
-};
-window.addF = async function(){
+}
+function addF(){
   let n=document.getElementById('fn').value||'Guest';
   let m=document.getElementById('fm').value;
-  if(!m) return alert('Please write your feedback first');
+  if(!m) return alert('Feedback to likh bhai');
   fbs.push({n,m,s:'Positive'});
   localStorage.setItem('loop_feedbacks', JSON.stringify(fbs));
   document.getElementById('fm').value='';
-  window.fr();
-  if(currentUser) await addXP(10);
-};
-window.ask = async function(){
+  fr();
+  if(getUser()) addXP(10);
+}
+function ask(){
   let q=document.getElementById('q').value.toLowerCase();
-  let a='Based on feedback: 68% Positive. Top theme is delivery speed.';
-  if(q.includes('issue')) a='Top issue: Delivery delay reported by 12% of users. Fix delivery first.';
-  if(q.includes('positive')||q.includes('good')) a='68% of users are happy. Most praise is for fast delivery and product quality.';
-  if(q.includes('suggest')||q.includes('improve')||q.includes('what')) a='1. Fix delivery time 2. Improve quality checks 3. Ask happy users for reviews.';
+  let a='Based on feedback: 68% Positive. Top theme Delivery speed.';
+  if(q.includes('issue')) a='Top issue: Delivery delay 12% users. Fix delivery first.';
+  if(q.includes('positive')||q.includes('acha')) a='68% users happy hai. Sabse zyada tareef fast delivery aur quality ki hai.';
+  if(q.includes('suggest')||q.includes('kya kar')) a='1. Delivery time fix karo 2. Quality check badhao 3. Happy users se review mango.';
   document.getElementById('ans').innerText='🤖 '+a;
-  if(currentUser) await addXP(5);
-};
-window.fr();
+  if(getUser()) addXP(5);
+}
+
+showApp();
+fr();
 </script>
 <script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
 </html>
