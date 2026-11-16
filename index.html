@@ -107,7 +107,7 @@
 
 <script type="module">
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
 // ===== FIREBASE CONFIG - Connected for LOOP AI =====
@@ -174,12 +174,22 @@ async function addXP(amount){
 }
 
 window.loginWithGoogle = async function(){
-  if(!firebaseReady) return alert("Firebase is not configured yet! Follow STEP 1 in the file - paste your Firebase config, then Google login will work. For now, use Email login below (it also works offline).");
+  if(!firebaseReady) return alert("Firebase is not configured yet!");
   try{
+    document.getElementById('authStatus').innerText = "Opening Google login... Please wait, you will be redirected.";
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
-  }catch(e){ alert(e.message); }
+    // Redirect works on mobile, Popup gets blocked on mobile Chrome
+    await signInWithRedirect(auth, provider);
+  }catch(e){ 
+    document.getElementById('authStatus').innerText = "Error: " + e.message;
+    alert(e.message); 
+  }
 };
+
+// Check if user is coming back from Google redirect
+getRedirectResult(auth).catch(e=>{
+  if(e.code && e.code !== 'auth/no-auth-event') document.getElementById('authStatus').innerText = "Google Error: " + e.message;
+});
 
 window.handleEmailLogin = async function(){
   const name = document.getElementById('loginName').value.trim();
