@@ -110,16 +110,15 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
-// ===== STEP 1: PASTE YOUR FIREBASE CONFIG HERE =====
-// Firebase Console > Project Settings > Your apps > Web app > Copy config
-// If you leave this as-is, the app will still work offline with localStorage.
+// ===== FIREBASE CONFIG - Connected for LOOP AI =====
 const firebaseConfig = {
-  apiKey: "PASTE_YOUR_API_KEY",
-  authDomain: "PASTE_YOUR_PROJECT.firebaseapp.com",
-  projectId: "PASTE_YOUR_PROJECT_ID",
-  storageBucket: "PASTE_YOUR_PROJECT.appspot.com",
-  messagingSenderId: "PASTE_YOUR_SENDER_ID",
-  appId: "PASTE_YOUR_APP_ID"
+  apiKey: "AIzaSyAMcuuNX6YXtxCbCvG5ggywmqIDN3Sd33k",
+  authDomain: "project-a6d7a1f8-6afe-45b4-b06.firebaseapp.com",
+  projectId: "project-a6d7a1f8-6afe-45b4-b06",
+  storageBucket: "project-a6d7a1f8-6afe-45b4-b06.firebasestorage.app",
+  messagingSenderId: "165729823802",
+  appId: "1:165729823802:web:adc2e5bb77cf07e14c9903",
+  measurementId: "G-LV9JGLFT5L"
 };
 
 let auth = null, db = null, firebaseReady = false;
