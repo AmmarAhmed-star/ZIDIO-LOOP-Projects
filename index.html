@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head><style>
 @font-face {
   font-family: "Optimistic";
@@ -75,14 +75,14 @@
 <div class='hero'>
   <div class='pill'>✦ AI Learning Platform • By Ammar Ahmed</div>
   <h1>Learn AI.<br><span>Loop. Level Up.</span></h1>
-  <p>Master AI prompts, feedback analysis and real-world AI skills — with XP, levels and progress.</p>
+  <p>Master AI prompts, feedback analysis and real-world AI skills — with XP, levels and progress that syncs across all your devices.</p>
   <div><span class='pill'>🔥 LIVE</span><span class='pill'>⭐ 4.8 / 5 Rating</span><span class='pill'>👥 1,284+ Learners</span></div>
 </div>
 
 <div class='wrap'>
   <div id='loginBox' class='card loop-auth'>
     <h2 style="margin:0 0 8px">👋 Login to LOOP AI</h2>
-    <p class="small">Login with Google or Email. Progress sync hoga.</p>
+    <p class="small">Login with Google or Email. Your progress will sync on any device.</p>
     <div id="errorBox"></div>
     <!-- BUTTONS: id se chalenge, onclick pe depend nahi -->
     <button id="googleBtn" class="google-btn" type="button">Continue with Google 🔍</button>
@@ -92,7 +92,7 @@
     <input id='loginPassword' type="password" placeholder='Password (min 6 characters)'>
     <button id="emailBtn" type="button">Login / Create Account 🚀</button>
     <p class="small" id="authStatus"></p>
-    <button id="testBtn" type="button" style='background:#334155'>🔧 Test - Button Check Karo</button>
+    <button id="testBtn" type="button" style='background:#334155'>🔧 Test - Check Buttons</button>
   </div>
 
   <div id='dashboardBox' class='card loop-auth' style='display:none'>
@@ -112,8 +112,8 @@
 
   <!-- LEADERBOARD -->
   <div class='card' id='leaderboardCard'>
-    <div style='display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px'><h2 style="margin:0">🏆 Leaderboard - Top Learners</h2><span class='pill' id='myRankPill'>Login karke rank dekho</span></div>
-    <p class='small'>Sabse zyada XP wala #1 pe. Lesson complete karo, feedback do, rank badhao!</p>
+    <div style='display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px'><h2 style="margin:0">🏆 Leaderboard - Top Learners</h2><span class='pill' id='myRankPill'>Login to see your rank</span></div>
+    <p class='small'>Highest XP ranks #1. Complete lessons, add feedback, climb the rank!</p>
     <div id='leaderList'><p class='small'>Loading leaderboard...</p></div>
     <button id='refreshLeaderBtn' type='button' style='background:#334155'>🔄 Refresh Leaderboard</button>
   </div>
@@ -121,8 +121,8 @@
   <!-- CERTIFICATE -->
   <div class='card' id='certCard'>
     <h2 style="margin:0">🎓 Certificate</h2>
-    <p class='small'>4/4 Lessons complete karne pe certificate unlock hoga. Fir download / print kar sakte ho.</p>
-    <div id='certLocked'><p class='small'>🔒 Abhi locked hai — <span id='certProgressText'>0/4 lessons</span> complete hue hai.</p><div class='loop-progress-bar'><div id='certBar' class='loop-progress-fill' style='width:0%'></div></div></div>
+    <p class='small'>Complete 4/4 lessons to unlock your certificate. Then you can download / print it.</p>
+    <div id='certLocked'><p class='small'>🔒 Locked — <span id='certProgressText'>0/4 lessons</span> completed.</p><div class='loop-progress-bar'><div id='certBar' class='loop-progress-fill' style='width:0%'></div></div></div>
     <div id='certUnlocked' style='display:none'>
       <div class='cert-preview' id='certPreview'>
         <div style='font-size:32px'>🏆</div>
@@ -133,7 +133,7 @@
         <p style='color:#666'>For successfully completing AI Learning Program<br>4 Lessons • <span id='certXP'>0 XP</span> • Level <span id='certLevel'>1</span></p>
         <div style='display:flex;justify-content:space-between;margin-top:20px;font-size:12px;color:#888'><span>By Ammar Ahmed<br>Founder, LOOP AI</span><span id='certDate'>2026</span></div>
       </div>
-      <button id='downloadCertBtn' type='button'>⬇️ Certificate Download / Print karo</button>
+      <button id='downloadCertBtn' type='button'>⬇️ Download / Print Certificate</button>
     </div>
   </div>
   <div class='card'>
@@ -145,12 +145,12 @@
     <input id='fm' placeholder='Your feedback...'>
     <button id="addFBtn" type="button">Add Feedback + (+10 XP)</button>
     <h3>🤖 Ask LOOP AI - Real AI Chat</h3>
-    <p class='small'>Ab ye fake nahi, <b style='color:#fff'>Real Gemini AI</b> hai. Neeche apni Gemini API Key daalo (ek baar) fir jo bhi pucho, real jawab milega.</p>
-    <input id='geminiKey' type='password' placeholder='Gemini API Key yahan daalo (AIza...) - ek baar, browser me save rahegi'>
-    <button id='saveKeyBtn' type='button' style='background:#334155'>🔑 API Key Save Karo</button>
-    <p class='small' id='keyStatus'>Key nahi hai to neeche Smart Answer (offline) chalega.</p>
-    <div style='text-align:left'><a href='https://aistudio.google.com/app/apikey' target='_blank' style='color:#a78bfa;font-size:13px'>👉 Free Gemini API Key yahan se lo (2 min, free)</a></div>
-    <div class='chat-box' id='chatBox'><div class='chat-msg ai'>👋 Hi! Main LOOP AI hu. Mujhse AI, prompts, resume, ya feedback ke baare me kuch bhi pucho!</div></div>
+    <p class='small'>This is <b style='color:#fff'>Real Gemini AI</b>. Enter your Gemini API Key once below, then ask anything for a real answer.</p>
+    <input id='geminiKey' type='password' placeholder='Enter Gemini API Key here (AIza...) - once, saved in your browser'>
+    <button id='saveKeyBtn' type='button' style='background:#334155'>🔑 Save API Key</button>
+    <p class='small' id='keyStatus'>Without a key, Smart Answer (offline) will work.</p>
+    <div style='text-align:left'><a href='https://aistudio.google.com/app/apikey' target='_blank' style='color:#a78bfa;font-size:13px'>👉 Get a Free Gemini API Key here (2 min, free)</a></div>
+    <div class='chat-box' id='chatBox'><div class='chat-msg ai'>👋 Hi! I am LOOP AI. Ask me anything about AI, prompts, resume, or feedback!</div></div>
     <input id='q' placeholder='Ask: AI se paisa kaise kamaye?'>
     <button id="askBtn" type="button" class='purple'>Ask Real AI ✨ (+5 XP)</button>
     <p id='ans'></p>
@@ -167,7 +167,7 @@
   window.onerror = function(msg, src, line, col){
     var box = document.getElementById('errorBox');
     if(box){ box.style.display='block'; box.innerText = 'JS Error: ' + msg + '\nLine: ' + line + '\nFile: ' + src; }
-    setStatus('JS Error - upar red box dekho');
+    setStatus('JS Error - see red box above');
     return false;
   };
   setStatus('JS: ✅ Buttons Ready');
@@ -192,7 +192,7 @@
   function addXP(amount){
     currentProgress.xp += amount;
     var nl = Math.floor(currentProgress.xp/100)+1;
-    if(nl > currentProgress.level){ currentProgress.level=nl; alert('Level Up! Ab tu Level '+nl+' pe hai 🔥'); }
+    if(nl > currentProgress.level){ currentProgress.level=nl; alert('Level Up! You are now Level '+nl+' 🔥'); }
     saveP(); updateProgressUI();
     // Firebase sync baad me hoga, pehle local to chale
     if(window._saveToCloud) window._saveToCloud();
@@ -238,33 +238,33 @@
 
   // --- BUTTONS: addEventListener se, onclick pe depend nahi ---
   document.getElementById('testBtn').addEventListener('click', function(){
-    alert('✅ BUTTON CHAL GAYA! Ab baaki buttons bhi chalenge.');
-    showMsg('✅ Buttons working hai! Ab Google dabao.', true);
+    alert('✅ Button works! All other buttons will work too.');
+    showMsg('✅ Buttons are working! Now tap Google.', true);
     setStatus('JS: ✅ Test Passed');
   });
   document.getElementById('emailBtn').addEventListener('click', function(){
     var name=document.getElementById('loginName').value.trim();
     var email=document.getElementById('loginEmail').value.trim();
     var pass=document.getElementById('loginPassword').value;
-    if(!email || !pass){ alert('Email + Password daalo'); return; }
-    if(pass.length<6){ alert('Password min 6 characters'); return; }
+    if(!email || !pass){ alert('Please enter Email + Password'); return; }
+    if(pass.length<6){ alert('Password must be at least 6 characters'); return; }
     // Pehle local login - taaki button kabhi dead na lage, Firebase baad me try hoga
     if(window._firebaseEmailLogin){
-      showMsg('Please wait... Firebase se login ho raha hai...', true);
+      showMsg('Please wait... Logging in with Firebase...', true);
       window._firebaseEmailLogin(name, email, pass, showMsg);
     } else {
       localStorage.setItem('loop_user', JSON.stringify({name: name || email.split('@')[0], email: email}));
       currentUser={uid:'local_'+email, displayName:name || email.split('@')[0], email:email};
-      saveP(); showMsg('Local login ho gaya ✅', true); showApp();
+      saveP(); showMsg('Local login successful ✅', true); showApp();
     }
   });
   document.getElementById('googleBtn').addEventListener('click', function(){
     if(window._firebaseGoogleLogin){
-      showMsg('Google khul raha hai...', true);
+      showMsg('Opening Google...', true);
       window._firebaseGoogleLogin(showMsg);
     } else {
-      showMsg('Firebase abhi load ho raha hai... 2 sec baad dobara dabao.', true);
-      alert('Firebase load ho raha hai, 2 second ruk ke dobara dabao.');
+      showMsg('Firebase is still loading... Please try again in 2 seconds.', true);
+      alert('Firebase is loading, please wait 2 seconds and try again.');
     }
   });
   document.getElementById('logoutBtn').addEventListener('click', function(){
@@ -272,7 +272,7 @@
     localStorage.removeItem('loop_user'); location.reload();
   });
   document.getElementById('resetBtn').addEventListener('click', function(){
-    if(!confirm('Progress delete kar du?')) return;
+    if(!confirm('Delete all progress?')) return;
     currentProgress={level:1,xp:0,done:[],streak:1}; saveP(); showApp();
     if(window._saveToCloud) window._saveToCloud();
   });
@@ -290,17 +290,17 @@
   document.getElementById('addFBtn').addEventListener('click', function(){
     var n=document.getElementById('fn').value||'Guest';
     var m=document.getElementById('fm').value;
-    if(!m){ alert('Feedback likho'); return; }
+    if(!m){ alert('Please write your feedback'); return; }
     fbs.push({n:n,m:m,s:'Positive'}); localStorage.setItem('loop_feedbacks', JSON.stringify(fbs));
-    document.getElementById('fm').value=''; fr(); if(currentUser) addXP(10); else alert('Feedback add ho gaya ✅ Login karoge to XP milega.');
+    document.getElementById('fm').value=''; fr(); if(currentUser) addXP(10); else alert('Feedback added ✅ Login to earn XP.');
   });
   document.getElementById('askBtn').addEventListener('click', function(){
     var qRaw=document.getElementById('q').value.trim();
-    if(!qRaw){ alert('Pehle kuch pucho to!'); return; }
+    if(!qRaw){ alert('Please ask something first!'); return; }
     addChatMsg(qRaw, 'user');
     document.getElementById('q').value='';
-    document.getElementById('ans').innerText='🤖 Soch raha hu...';
-    var btn=document.getElementById('askBtn'); btn.disabled=true; btn.innerText='AI Soch Raha Hai...';
+    document.getElementById('ans').innerText='🤖 Thinking...';
+    var btn=document.getElementById('askBtn'); btn.disabled=true; btn.innerText='AI is Thinking...';
     window._askRealAI(qRaw, function(a){
       addChatMsg(a, 'ai');
       document.getElementById('ans').innerText='🤖 '+a;
@@ -333,4 +333,4 @@
     var html='';
     list.forEach(function(u,i){
       var medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':('#'+(i+1));
-      html += '<div class="leader-row '+(u.me?'me':'')+'"><span style="display:flex;align-items:center;gap:10px"><span class="rank">'+medal+'</span><b>'+u.name+'</b>'+(u.
+      html += '<div class="leader-row '+(u.me?'me':'')+'"><span style="display:flex;align-items:center;gap:10px"><span class="rank">'+medal+'</span><b>'+u.name+'</b>'+(u.me?' <span class="ba
