@@ -56,6 +56,15 @@
   #authStatus{color:#fda4af;font-weight:600;min-height:20px}
   #authStatus.ok{color:#86efac}
   #jsStatus{position:fixed;bottom:10px;right:10px;background:#14532d;color:#fff;padding:8px 12px;border-radius:999px;font-size:12px;z-index:999;font-weight:700}
+  .leader-row{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;margin:8px 0}
+  .leader-row.me{border-color:#a855f7;background:rgba(168,85,247,.15)}
+  .rank{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#22d3ee);display:grid;place-items:center;font-weight:800;font-size:14px;flex-shrink:0}
+  .cert-preview{background:#fff;color:#111;border-radius:16px;padding:28px 22px;text-align:center;margin:14px 0}
+  .cert-preview h2{font-size:28px;margin:6px 0;letter-spacing:1px}
+  .chat-box{background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px;min-height:120px;max-height:300px;overflow-y:auto;margin:10px 0;text-align:left;line-height:1.6;font-size:14px}
+  .chat-msg{margin:8px 0;padding:10px 12px;border-radius:12px}
+  .chat-msg.user{background:rgba(124,58,237,.3);margin-left:20px}
+  .chat-msg.ai{background:rgba(255,255,255,.08);margin-right:20px}
   #errorBox{display:none;background:#7f1d1d;border:1px solid #ef4444;color:#fecaca;padding:12px;border-radius:12px;margin:12px 0;font-size:13px;white-space:pre-wrap;word-break:break-word}
 </style>
 </head>
@@ -100,6 +109,33 @@
     <button id="resetBtn" type="button" style='background:#444'>Reset Progress</button>
   </div>
 
+
+  <!-- LEADERBOARD -->
+  <div class='card' id='leaderboardCard'>
+    <div style='display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px'><h2 style="margin:0">🏆 Leaderboard - Top Learners</h2><span class='pill' id='myRankPill'>Login karke rank dekho</span></div>
+    <p class='small'>Sabse zyada XP wala #1 pe. Lesson complete karo, feedback do, rank badhao!</p>
+    <div id='leaderList'><p class='small'>Loading leaderboard...</p></div>
+    <button id='refreshLeaderBtn' type='button' style='background:#334155'>🔄 Refresh Leaderboard</button>
+  </div>
+
+  <!-- CERTIFICATE -->
+  <div class='card' id='certCard'>
+    <h2 style="margin:0">🎓 Certificate</h2>
+    <p class='small'>4/4 Lessons complete karne pe certificate unlock hoga. Fir download / print kar sakte ho.</p>
+    <div id='certLocked'><p class='small'>🔒 Abhi locked hai — <span id='certProgressText'>0/4 lessons</span> complete hue hai.</p><div class='loop-progress-bar'><div id='certBar' class='loop-progress-fill' style='width:0%'></div></div></div>
+    <div id='certUnlocked' style='display:none'>
+      <div class='cert-preview' id='certPreview'>
+        <div style='font-size:32px'>🏆</div>
+        <div style='letter-spacing:4px;font-size:11px;color:#7c3aed;font-weight:800'>CERTIFICATE OF COMPLETION</div>
+        <h2>LOOP AI</h2>
+        <p style='color:#666'>This certificate is proudly presented to</p>
+        <h2 id='certName' style='color:#7c3aed'>Ammar Ahmed</h2>
+        <p style='color:#666'>For successfully completing AI Learning Program<br>4 Lessons • <span id='certXP'>0 XP</span> • Level <span id='certLevel'>1</span></p>
+        <div style='display:flex;justify-content:space-between;margin-top:20px;font-size:12px;color:#888'><span>By Ammar Ahmed<br>Founder, LOOP AI</span><span id='certDate'>2026</span></div>
+      </div>
+      <button id='downloadCertBtn' type='button'>⬇️ Certificate Download / Print karo</button>
+    </div>
+  </div>
   <div class='card'>
     <h2 style="margin:0">📊 Feedback Intelligence</h2>
     <p>😊 Positive 68% | ⭐ Avg 4.2 | 🔥 Top Theme: Delivery • Total: <span id='fbCount'>1284</span></p>
@@ -108,9 +144,15 @@
     <input id='fn' placeholder='Your Name'>
     <input id='fm' placeholder='Your feedback...'>
     <button id="addFBtn" type="button">Add Feedback + (+10 XP)</button>
-    <h3>🤖 Ask LOOP AI</h3>
-    <input id='q' placeholder='Ask: What is the top issue?'>
-    <button id="askBtn" type="button" class='purple'>Ask AI ✨ (+5 XP)</button>
+    <h3>🤖 Ask LOOP AI - Real AI Chat</h3>
+    <p class='small'>Ab ye fake nahi, <b style='color:#fff'>Real Gemini AI</b> hai. Neeche apni Gemini API Key daalo (ek baar) fir jo bhi pucho, real jawab milega.</p>
+    <input id='geminiKey' type='password' placeholder='Gemini API Key yahan daalo (AIza...) - ek baar, browser me save rahegi'>
+    <button id='saveKeyBtn' type='button' style='background:#334155'>🔑 API Key Save Karo</button>
+    <p class='small' id='keyStatus'>Key nahi hai to neeche Smart Answer (offline) chalega.</p>
+    <div style='text-align:left'><a href='https://aistudio.google.com/app/apikey' target='_blank' style='color:#a78bfa;font-size:13px'>👉 Free Gemini API Key yahan se lo (2 min, free)</a></div>
+    <div class='chat-box' id='chatBox'><div class='chat-msg ai'>👋 Hi! Main LOOP AI hu. Mujhse AI, prompts, resume, ya feedback ke baare me kuch bhi pucho!</div></div>
+    <input id='q' placeholder='Ask: AI se paisa kaise kamaye?'>
+    <button id="askBtn" type="button" class='purple'>Ask Real AI ✨ (+5 XP)</button>
     <p id='ans'></p>
   </div>
 </div>
@@ -253,100 +295,42 @@
     document.getElementById('fm').value=''; fr(); if(currentUser) addXP(10); else alert('Feedback add ho gaya ✅ Login karoge to XP milega.');
   });
   document.getElementById('askBtn').addEventListener('click', function(){
-    var q=document.getElementById('q').value.toLowerCase();
-    var a='Based on feedback: 68% Positive. Top theme is delivery speed.';
-    if(q.indexOf('issue')!==-1) a='Top issue: Delivery delay reported by 12% of users. Fix delivery first.';
-    if(q.indexOf('positive')!==-1||q.indexOf('good')!==-1) a='68% of users are happy. Most praise is for fast delivery and product quality.';
-    if(q.indexOf('suggest')!==-1||q.indexOf('improve')!==-1||q.indexOf('what')!==-1) a='1. Fix delivery time 2. Improve quality checks 3. Ask happy users for reviews.';
-    document.getElementById('ans').innerText='🤖 '+a;
-    if(currentUser) addXP(5);
+    var qRaw=document.getElementById('q').value.trim();
+    if(!qRaw){ alert('Pehle kuch pucho to!'); return; }
+    addChatMsg(qRaw, 'user');
+    document.getElementById('q').value='';
+    document.getElementById('ans').innerText='🤖 Soch raha hu...';
+    var btn=document.getElementById('askBtn'); btn.disabled=true; btn.innerText='AI Soch Raha Hai...';
+    window._askRealAI(qRaw, function(a){
+      addChatMsg(a, 'ai');
+      document.getElementById('ans').innerText='🤖 '+a;
+      btn.disabled=false; btn.innerText='Ask Real AI ✨ (+5 XP)';
+      if(currentUser) addXP(5);
+    });
   });
 
-  // Expose for Firebase step
-  window._loop = { getProgress:function(){return currentProgress;}, setUser:function(u){currentUser=u;}, showApp:showApp, showMsg:showMsg, saveP:saveP };
-  showApp(); fr();
-  setStatus('JS: ✅ Buttons Ready - Test dabao');
-})();
-</script>
 
-<!-- STEP 2: FIREBASE ALAG SE - AGAR YE FAIL BHI HUA TO UPAR WALE BUTTONS CHALTE RAHENGE -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-<script>
-(function(){
-  try{
-    if(typeof firebase === 'undefined'){ console.log('Firebase CDN blocked'); return; }
-    var config = {
-      apiKey: "AIzaSyAMcuuNX6YXtxCbCvG5ggywmqIDN3Sd33k",
-      authDomain: "project-a6d7a1f8-6afe-45b4-b06.firebaseapp.com",
-      projectId: "project-a6d7a1f8-6afe-45b4-b06",
-      storageBucket: "project-a6d7a1f8-6afe-45b4-b06.firebasestorage.app",
-      messagingSenderId: "165729823802",
-      appId: "1:165729823802:web:adc2e5bb77cf07e14c9903",
-      measurementId: "G-LV9JGLFT5L"
-    };
-    firebase.initializeApp(config);
-    var auth = firebase.auth();
-    var db = firebase.firestore();
-    var st = document.getElementById('jsStatus');
-    if(st) st.innerText = 'JS: ✅ Firebase Connected';
-
-    window._saveToCloud = function(){
-      var user = firebase.auth().currentUser;
-      if(!user) return;
-      var p = window._loop.getProgress();
-      db.collection('users').doc(user.uid).set({progress:p}, {merge:true}).catch(function(e){console.log(e);});
-    };
-    window._firebaseLogout = function(){ auth.signOut().catch(function(){}); };
-    window._firebaseGoogleLogin = function(showMsg){
-      var provider = new firebase.auth.GoogleAuthProvider();
-      provider.addScope('profile'); provider.addScope('email');
-      auth.signInWithPopup(provider).then(function(){ showMsg('Google login success! 🎉', true); })
-      .catch(function(e){
-        console.log(e);
-        if(e.code==='auth/popup-blocked' || e.code==='auth/popup-closed-by-user'){
-          showMsg('Popup nahi khula, Redirect try kar raha hu...', true);
-          auth.signInWithRedirect(provider).catch(function(e2){ showMsg('❌ '+(e2.message||e2.code), false); });
-        } else if(e.code==='auth/unauthorized-domain'){
-          showMsg('❌ Domain not authorized. Firebase > Authentication > Settings > Authorized domains me ammarahmed-star.github.io add karo.', false);
-        } else if(e.code==='auth/operation-not-allowed'){
-          showMsg('❌ Google Provider OFF hai. Firebase > Sign-in method > Google > Enable karo.', false);
-        } else {
-          showMsg('❌ '+(e.message||e.code), false);
-        }
-      });
-    };
-    window._firebaseEmailLogin = function(name, email, pass, showMsg){
-      auth.signInWithEmailAndPassword(email, pass).catch(function(err){
-        if(err.code==='auth/invalid-credential' || err.code==='auth/user-not-found'){
-          return auth.createUserWithEmailAndPassword(email, pass).then(function(cred){ if(name) return cred.user.updateProfile({displayName:name}); });
-        } else throw err;
-      }).catch(function(e){ showMsg('❌ '+(e.message||e.code), false); });
-    };
-    auth.getRedirectResult().catch(function(e){ if(e && e.code) window._loop.showMsg('❌ '+(e.message||e.code), false); });
-    auth.onAuthStateChanged(function(user){
-      if(user){
-        db.collection('users').doc(user.uid).get().then(function(snap){
-          var cloud = snap.exists ? (snap.data().progress || null) : null;
-          var local = window._loop.getProgress();
-          if(cloud && cloud.xp > (local.xp||0)){
-            localStorage.setItem('loop_progress', JSON.stringify(cloud));
-          } else if(local.xp > 0){
-            db.collection('users').doc(user.uid).set({progress:local}, {merge:true});
-          }
-          localStorage.setItem('loop_user', JSON.stringify({name:user.displayName||'', email:user.email}));
-          window._loop.setUser(user);
-          window._loop.showApp();
-        }).catch(function(){
-          localStorage.setItem('loop_user', JSON.stringify({name:user.displayName||'', email:user.email}));
-          window._loop.setUser(user); window._loop.showApp();
-        });
-      }
-    });
-  }catch(e){
-    console.log('Firebase step failed, buttons still work', e);
+  // --- LEADERBOARD + CERTIFICATE ---
+  function getDemoLeaders(){
+    var me = currentUser ? {name: currentUser.displayName || currentUser.name || 'You', xp: currentProgress.xp, level: currentProgress.level, me:true} : null;
+    var base = [
+      {name:'Priya Sharma', xp:480, level:5},
+      {name:'Rohit Verma', xp:350, level:4},
+      {name:'Sana Khan', xp:280, level:3},
+      {name:'Arjun Patel', xp:210, level:3},
+      {name:'Neha Gupta', xp:140, level:2}
+    ];
+    if(me){
+      var exists=false;
+      base = base.map(function(u){ if(u.name===me.name){ exists=true; return me; } return u; });
+      if(!exists) base.push(me);
+    }
+    base.sort(function(a,b){ return b.xp - a.xp; });
+    return base.slice(0,10);
   }
-})();
-</script>
-<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-
+  function renderLeaderboard(realList){
+    var list = realList || getDemoLeaders();
+    var html='';
+    list.forEach(function(u,i){
+      var medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':('#'+(i+1));
+      html += '<div class="leader-row '+(u.me?'me':'')+'"><span style="display:flex;align-items:center;gap:10px"><span class="rank">'+medal+'</span><b>'+u.name+'</b>'+(u.
