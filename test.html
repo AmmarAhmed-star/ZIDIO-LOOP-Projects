@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Button Test</title>
+<style>body{background:#111;color:#fff;font-family:sans-serif;text-align:center;padding:40px}button{padding:16px 24px;font-size:18px;border:none;border-radius:12px;background:#7c3aed;color:#fff;font-weight:700;width:100%;max-width:400px}</style>
+</head><body>
+<h1>🔧 Button Test</h1>
+<p>Agar ye button chala to tera browser sahi hai, problem GitHub wali file me hai.</p>
+<button onclick="alert('✅ BUTTON CHAL GAYA! Browser sahi hai.')">TEST KARO - DABAO MUJHE</button>
+<p id="msg" style="margin-top:20px;color:#94a3b8">Page load hote hi ye text badal jayega...</p>
+<script>
+document.getElementById('msg').innerText = '✅ JS Load ho gaya - ' + new Date().toLocaleTimeString();
+console.log('JS Working');
+</script>
+</body></html>
