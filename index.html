@@ -27,56 +27,19 @@
 <meta name='viewport' content='width=device-width,initial-scale=1'>
 <title>LOOP AI - Ammar Ahmed</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap');
-  *{box-sizing:border-box}
-  :root{--bg:#070812;--border:rgba(255,255,255,.12);--text:#f8fafc;--muted:#94a3b8}
-  body{margin:0;font-family:'Inter',system-ui,sans-serif;background:radial-gradient(900px 500px at 10% 0%,rgba(124,58,237,.35),transparent 60%),radial-gradient(800px 500px at 90% 10%,rgba(34,211,238,.22),transparent 60%),var(--bg);color:var(--text);min-height:100vh}
-  .topnav{max-width:1080px;margin:0 auto;padding:18px 20px;display:flex;align-items:center;justify-content:space-between}
-  .logo{font-family:'Sora',sans-serif;font-weight:800;font-size:22px;display:flex;align-items:center;gap:10px}
-  .logo-badge{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#7c3aed,#22d3ee);display:grid;place-items:center;font-size:20px}
-  .nav-links{display:flex;gap:18px;color:var(--muted);font-size:14px;font-weight:500}
-  .nav-cta{background:#fff;color:#111;padding:9px 16px;border-radius:999px;font-weight:700;font-size:13px}
-  @media(max-width:640px){.nav-links{display:none}}
-  .hero{max-width:1080px;margin:10px auto 0;padding:36px 20px 10px;text-align:center}
-  .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid var(--border);padding:7px 12px;border-radius:999px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#c4b5fd;font-weight:700}
-  .hero h1{font-family:'Sora',sans-serif;font-size:clamp(44px,8vw,72px);line-height:.95;margin:18px 0 12px;letter-spacing:-2.5px}
-  .hero h1 span{background:linear-gradient(90deg,#a78bfa,#22d3ee,#22c55e);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-  .hero p{color:var(--muted);font-size:clamp(15px,2vw,18px);line-height:1.6;max-width:620px;margin:0 auto 20px}
-  .hero-stats{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:18px}
-  .pill{background:rgba(255,255,255,.08);border:1px solid var(--border);padding:9px 14px;border-radius:999px;font-size:13px;font-weight:600}
-  .wrap{max-width:1080px;margin:0 auto;padding:20px}
-  .card{background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.04));border:1px solid var(--border);border-radius:20px;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.35);margin-bottom:18px}
-  .card h2{font-family:'Sora',sans-serif;letter-spacing:-.5px;margin:0 0 8px}
-  .loop-auth{max-width:720px;margin:16px auto}
-  .loop-auth input{width:100%;box-sizing:border-box;margin:8px 0}
-  input{background:rgba(0,0,0,.35);border:1px solid var(--border);color:#fff;padding:14px 16px;border-radius:12px;font-size:15px;outline:none}
-  input:focus{border-color:#a855f7;box-shadow:0 0 0 3px rgba(168,85,247,.25)}
-  input::placeholder{color:#64748b}
-  button{width:100%;padding:14px;border:none;border-radius:12px;background:linear-gradient(90deg,#7c3aed,#a855f7);color:#fff;font-weight:700;font-size:15px;cursor:pointer;transition:.2s;box-shadow:0 10px 25px rgba(124,58,237,.35)}
-  button:hover{transform:translateY(-1px);filter:brightness(1.1)}
-  button:disabled{opacity:.6;cursor:not-allowed}
-  button.purple{background:linear-gradient(90deg,#7c3aed,#22d3ee)}
-  .google-btn{background:#fff !important;color:#111 !important;display:flex;align-items:center;justify-content:center;gap:8px}
-  .loop-progress-bar{background:rgba(255,255,255,.12);height:12px;border-radius:999px;overflow:hidden;margin:12px 0}
-  .loop-progress-fill{background:linear-gradient(90deg,#a855f7,#22d3ee,#22c55e);height:100%;width:0%;transition:.6s}
-  .loop-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-  .loop-top button{width:auto;padding:9px 16px}
-  .lesson-row{display:flex;justify-content:space-between;align-items:center;gap:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);padding:14px;border-radius:14px;margin:10px 0;text-align:left}
-  .lesson-row button{width:auto;padding:9px 14px;margin:0}
-  .small{font-size:13px;color:var(--muted);line-height:1.5}
-  .sync-badge{font-size:12px;background:#22c55e;color:#fff;padding:5px 10px;border-radius:999px;font-weight:700}
-  .divider{text-align:center;opacity:.6;margin:14px 0;font-size:12px;letter-spacing:.12em;font-weight:700}
-  .badge{background:rgba(34,197,94,.18);color:#86efac;border:1px solid rgba(34,197,94,.3);padding:4px 8px;border-radius:999px;font-size:11px;font-weight:700}
-  #fb p{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);padding:12px 14px;border-radius:12px;margin:8px 0}
-  #ans{background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.25);padding:14px;border-radius:12px;line-height:1.6}
-  .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
-  .stat{background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:14px;padding:14px;text-align:center}
-  .stat b{font-size:22px;display:block}
-  .stat span{font-size:12px;color:var(--muted)}
-  @media(max-width:640px){.stats-grid{grid-template-columns:1fr 1fr}.card{padding:18px}}
-  .footer{text-align:center;color:var(--muted);font-size:13px;padding:20px 0 30px}
-  #authStatus{color:#fda4af;font-weight:600}
-  #authStatus.ok{color:#86efac}
+  .loop-auth { max-width: 720px; margin: 16px auto; }
+  .loop-auth input { width: 100%; box-sizing: border-box; margin: 6px 0; }
+  .loop-progress-bar { background: rgba(255,255,255,.15); height: 12px; border-radius: 20px; overflow: hidden; margin: 10px 0; }
+  .loop-progress-fill { background: linear-gradient(90deg,#a855f7,#22c55e); height: 100%; width: 0%; transition: .5s; }
+  .loop-top { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
+  .loop-top button { width:auto; padding:8px 14px; }
+  .lesson-row { display:flex; justify-content:space-between; align-items:center; gap:10px; background: rgba(255,255,255,.06); padding:10px 12px; border-radius:10px; margin:8px 0; text-align:left; }
+  .lesson-row button { width:auto; padding:8px 12px; margin:0; }
+  .small { opacity:.8; font-size:13px; }
+  .sync-badge { font-size:12px; background:#22c55e; color:#fff; padding:4px 10px; border-radius:20px; }
+  .sync-badge.offline { background:#f59e0b; }
+  .divider { text-align:center; opacity:.6; margin:10px 0; font-size:13px; }
+  .google-btn { background:#fff !important; color:#111 !important; }
 </style>
 <script type="importmap">
 { "imports": {
@@ -88,37 +51,30 @@
 </head>
 <body>
 
-<div class='topnav'>
-  <div class='logo'><span class='logo-badge'>🤖</span> LOOP AI</div>
-  <div class='nav-links'><span>Learn</span><span>Feedback</span><span>Ask AI</span></div>
-  <div class='nav-cta'>● Live on GitHub</div>
-</div>
-
 <div class='hero'>
-  <div class='hero-eyebrow'>✦ AI Learning Platform • Built by Ammar Ahmed</div>
-  <h1>Learn AI.<br><span>Loop. Level Up.</span></h1>
-  <p>Master AI prompts, feedback analysis and real-world AI skills — with XP, levels and progress that syncs across all your devices.</p>
-  <div class='hero-stats'><span class='pill'>🔥 LIVE</span><span class='pill'>⭐ 4.8 / 5 Rating</span><span class='pill'>👥 1,284+ Learners</span><span class='pill'>🚀 2026 Edition</span></div>
+  <div style='font-size:52px'>🤖</div>
+  <h1>LOOP AI 🤖</h1>
+  <p>By Ammar Ahmed | Live on GitHub Pages | Made with ❤️</p>
+  <div><span class='pill'>🔥 LIVE</span><span class='pill'>⭐ 4.8 Rating</span><span class='pill'>🚀 2026</span></div>
 </div>
 
 <div class='wrap'>
 
-  <!-- LOGIN -->
+  <!-- ===== LOGIN BOX ===== -->
   <div id='loginBox' class='card loop-auth'>
     <h2>👋 Login to LOOP AI</h2>
-    <p class="small">Login with Google or Email. Your progress will sync on any device.</p>
-    <button id="googleBtn" class="google-btn" onclick='loginWithGoogle()'>Continue with Google 🔍</button>
-    <p class="small" id="googleHint" style="text-align:center">Google button dabate hi Google ka page khulega.</p>
+    <p class="small">Login with Google or Email. Your progress will sync on any device - phone, laptop, anywhere.</p>
+    <button class="google-btn" onclick='loginWithGoogle()'>Continue with Google 🔍</button>
     <div class="divider">— OR LOGIN WITH EMAIL —</div>
     <input id='loginName' placeholder='Your Name - e.g. Ammar'>
     <input id='loginEmail' type="email" placeholder='Email'>
     <input id='loginPassword' type="password" placeholder='Password (min 6 characters)'>
-    <button onclick='handleEmailLogin()'>Login / Create Account 🚀</button>
+    <button onclick='handleEmailLogin(false)'>Login / Create Account 🚀</button>
     <p class="small" id="authStatus"></p>
-    <p class="small">New user? Just enter name + email + password and click the button - account auto-create ho jayega.</p>
+    <p class="small">New user? Just enter name + email + password and click the button - your account will be created automatically.</p>
   </div>
 
-  <!-- DASHBOARD -->
+  <!-- ===== USER DASHBOARD + PROGRESS ===== -->
   <div id='dashboardBox' class='card loop-auth' style='display:none'>
     <div class='loop-top'>
       <h2 style='margin:0'>Welcome, <span id='userName'>Guest</span> 👋</h2>
@@ -133,11 +89,10 @@
     <button onclick='resetProgress()' style='background:#444'>Reset Progress</button>
   </div>
 
-  <!-- FEEDBACK -->
+  <!-- ===== FEEDBACK DASHBOARD ===== -->
   <div class='card'>
-    <div style='display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap'><h2 style='margin:0'>📊 Feedback Intelligence</h2><span class='pill'>Live Data</span></div>
-    <div class='stats-grid'><div class='stat'><b>1,284+</b><span>Feedbacks</span></div><div class='stat'><b>68%</b><span>Positive</span></div><div class='stat'><b>4.2 ⭐</b><span>Avg Rating</span></div></div>
-    <p>😊 Positive 68% | ⭐ Avg 4.2 | 🔥 Top Theme: <b style='color:#fff'>Delivery</b> • Total: <span id='fbCount'>1284</span></p>
+    <h2>📊 Dashboard - <span id='fbCount'>1284</span> Feedbacks</h2>
+    <p>😊 Positive 68% | ⭐ Avg 4.2 | 🔥 Top Theme: Delivery</p>
     <input id='fs' placeholder='🔍 Search feedback...' oninput='fr()'>
     <div id='fb'></div>
     <input id='fn' placeholder='Your Name'>
@@ -149,13 +104,13 @@
     <p id='ans'></p>
   </div>
 </div>
-<div class='footer'>Made with ❤️ by <b style='color:#fff'>Ammar Ahmed</b> • LOOP AI • Zidio Internship Project • © 2026</div>
 
 <script type="module">
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
+// ===== FIREBASE CONFIG - Connected for LOOP AI =====
 const firebaseConfig = {
   apiKey: "AIzaSyAMcuuNX6YXtxCbCvG5ggywmqIDN3Sd33k",
   authDomain: "project-a6d7a1f8-6afe-45b4-b06.firebaseapp.com",
@@ -166,28 +121,15 @@ const firebaseConfig = {
   measurementId: "G-LV9JGLFT5L"
 };
 
-let auth=null, db=null, firebaseReady=false;
-try{
-  const app = initializeApp(firebaseConfig);
-  auth = getAuth(app);
-  db = getFirestore(app);
-  firebaseReady = true;
-  setPersistence(auth, browserLocalPersistence).catch(()=>{});
-}catch(e){ console.log("Firebase error", e); }
-
-function showMsg(msg, ok=false){
-  const el=document.getElementById('authStatus');
-  if(el){ el.innerText=msg; el.className = ok ? "small ok" : "small"; }
-}
-function friendlyError(e){
-  console.log("Auth error:", e);
-  if(e.code==='auth/unauthorized-domain') return "❌ Error: Domain not authorized. Firebase > Authentication > Settings > Authorized domains me 'ammarahmed-star.github.io' add karo.";
-  if(e.code==='auth/operation-not-allowed') return "❌ Error: Google Provider OFF hai. Firebase > Authentication > Sign-in method > Google > Enable karo.";
-  if(e.code==='auth/popup-blocked') return "Popup blocked hua, Redirect try kar raha hu...";
-  if(e.code==='auth/popup-closed-by-user') return "Popup band ho gaya. Dobara try karo.";
-  if(e.code==='auth/network-request-failed') return "❌ Network issue. Internet check karke dobara try karo.";
-  return "❌ " + (e.message || e.code || "Login failed. Dobara try karo.");
-}
+let auth = null, db = null, firebaseReady = false;
+try {
+  if (!firebaseConfig.apiKey.includes("PASTE_")) {
+    const app = initializeApp(firebaseConfig);
+    auth = getAuth(app);
+    db = getFirestore(app);
+    firebaseReady = true;
+  }
+} catch(e) { console.log("Firebase not configured yet, using localStorage mode", e); }
 
 const lessons = [
   { id: 1, title: "What is AI?", xp: 20 },
@@ -195,90 +137,125 @@ const lessons = [
   { id: 3, title: "Build a Resume with ChatGPT", xp: 40 },
   { id: 4, title: "How to Earn Money with AI?", xp: 50 },
 ];
-let currentUser=null;
-let currentProgress={level:1,xp:0,done:[],streak:1};
+
+let currentUser = null;
+let currentProgress = { level: 1, xp: 0, done: [], streak: 1 };
 
 function getLocalProgress(){ try{ return JSON.parse(localStorage.getItem('loop_progress')||'{"level":1,"xp":0,"done":[],"streak":1}'); }catch(e){ return {level:1,xp:0,done:[],streak:1}; } }
 function saveLocalProgress(p){ localStorage.setItem('loop_progress', JSON.stringify(p)); }
-async function saveProgressToCloud(uid,p){
-  saveLocalProgress(p);
-  if(!firebaseReady || !uid) return;
-  try{ await setDoc(doc(db,"users",uid), {progress:p, updatedAt: new Date().toISOString()}, {merge:true}); }catch(e){ console.log(e); }
-}
+
 async function loadProgressFromCloud(uid){
   if(!firebaseReady) return getLocalProgress();
-  try{ const snap=await getDoc(doc(db,"users",uid)); if(snap.exists()) return snap.data().progress || getLocalProgress(); return getLocalProgress(); }catch(e){ return getLocalProgress(); }
+  try{
+    const snap = await getDoc(doc(db, "users", uid));
+    if(snap.exists()) return snap.data().progress || getLocalProgress();
+    return getLocalProgress();
+  }catch(e){ return getLocalProgress(); }
 }
+async function saveProgressToCloud(uid, p){
+  saveLocalProgress(p);
+  if(!firebaseReady || !uid) return;
+  try{ await setDoc(doc(db, "users", uid), { progress: p, updatedAt: new Date().toISOString() }, { merge: true }); setSync(true); }
+  catch(e){ setSync(false); }
+}
+function setSync(ok){
+  const el = document.getElementById('syncBadge');
+  if(!el) return;
+  el.innerText = ok ? "● Synced" : "● Offline - Saved Locally";
+  el.className = "sync-badge" + (ok ? "" : " offline");
+}
+
 async function addXP(amount){
   currentProgress.xp += amount;
-  let nl = Math.floor(currentProgress.xp/100)+1;
-  if(nl > currentProgress.level){ currentProgress.level=nl; alert(`Level Up! Ab tu Level ${nl} pe hai 🔥`); }
+  let newLevel = Math.floor(currentProgress.xp/100)+1;
+  if(newLevel > currentProgress.level){ currentProgress.level = newLevel; alert(`Level Up! You are now on Level ${currentProgress.level} 🔥`); }
   await saveProgressToCloud(currentUser?.uid, currentProgress);
   updateProgressUI();
 }
 
-// --- GOOGLE LOGIN - FIXED: Popup first, Redirect fallback ---
 window.loginWithGoogle = async function(){
-  const btn=document.getElementById('googleBtn');
-  if(!firebaseReady){ showMsg("❌ Firebase connect nahi hua. Page refresh karo."); return; }
-  if(btn){ btn.disabled=true; btn.innerText="Opening Google... Please wait..."; }
-  showMsg("Google khul raha hai... Please wait...", true);
-  const provider = new GoogleAuthProvider();
-  provider.addScope('profile'); provider.addScope('email');
+  if(!firebaseReady) return alert("Firebase is not configured yet!");
   try{
-    // Pehle Popup try karo - laptop + mobile dono pe fast hai
-    await signInWithPopup(auth, provider);
-    // Success -> onAuthStateChanged handle karega
-  }catch(e){
-    // Popup fail / blocked / mobile issue -> Redirect use karo
-    if(e.code==='auth/popup-blocked' || e.code==='auth/popup-closed-by-user' || e.code==='auth/cancelled-popup-request' || e.code==='auth/operation-not-supported-in-this-environment'){
-      showMsg("Popup nahi khula, Redirect se try kar raha hu...", true);
-      try{ await signInWithRedirect(auth, provider); return; }
-      catch(e2){ showMsg(friendlyError(e2)); }
-    } else {
-      showMsg(friendlyError(e));
-    }
-  } finally {
-    if(btn){ btn.disabled=false; btn.innerText="Continue with Google 🔍"; }
+    document.getElementById('authStatus').innerText = "Opening Google login... Please wait, you will be redirected.";
+    const provider = new GoogleAuthProvider();
+    // Redirect works on mobile, Popup gets blocked on mobile Chrome
+    await signInWithRedirect(auth, provider);
+  }catch(e){ 
+    document.getElementById('authStatus').innerText = "Error: " + e.message;
+    alert(e.message); 
   }
 };
 
+// Check if user is coming back from Google redirect
+getRedirectResult(auth).catch(e=>{
+  if(e.code && e.code !== 'auth/no-auth-event') document.getElementById('authStatus').innerText = "Google Error: " + e.message;
+});
+
 window.handleEmailLogin = async function(){
-  const name=document.getElementById('loginName').value.trim();
-  const email=document.getElementById('loginEmail').value.trim();
-  const pass=document.getElementById('loginPassword').value;
-  if(!email || !pass) return alert('Email + Password daalo');
-  if(pass.length<6) return alert('Password min 6 characters');
-  showMsg("Please wait...", true);
+  const name = document.getElementById('loginName').value.trim();
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPassword').value.trim();
+  if(!email || !pass) return alert('Please enter email and password');
+  if(pass.length < 6) return alert('Password must be at least 6 characters');
+  document.getElementById('authStatus').innerText = "Please wait...";
+  if(!firebaseReady){
+    // OFFLINE MODE - same as before, works without Firebase
+    localStorage.setItem('loop_user', JSON.stringify({name: name || email.split('@')[0], email}));
+    currentUser = { uid: "local_" + email, displayName: name, email };
+    currentProgress = getLocalProgress();
+    document.getElementById('authStatus').innerText = "Logged in locally (Offline Mode). Add Firebase config to sync across devices.";
+    showApp(); return;
+  }
   try{
     let cred;
-    try{ cred=await signInWithEmailAndPassword(auth,email,pass); }
-    catch(err){ if(err.code==='auth/invalid-credential' || err.code==='auth/user-not-found'){ cred=await createUserWithEmailAndPassword(auth,email,pass); if(name) await updateProfile(cred.user,{displayName:name}); } else throw err; }
-  }catch(e){ showMsg(friendlyError(e)); }
+    try{ cred = await signInWithEmailAndPassword(auth, email, pass); }
+    catch(err){ if(err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found'){ cred = await createUserWithEmailAndPassword(auth, email, pass); if(name) await updateProfile(cred.user, { displayName: name }); } else throw err; }
+    // onAuthStateChanged will handle the rest
+  }catch(e){ document.getElementById('authStatus').innerText = e.message; }
 };
-window.logoutUser = async function(){ if(firebaseReady){ try{ await signOut(auth); }catch(e){} } localStorage.removeItem('loop_user'); location.reload(); };
-window.resetProgress = async function(){ if(!confirm('Progress delete kar du?')) return; currentProgress={level:1,xp:0,done:[],streak:1}; await saveProgressToCloud(currentUser?.uid, currentProgress); showApp(); };
-window.completeLesson = async function(id,xp){ if(currentProgress.done.includes(id)) return alert('Already done!'); currentProgress.done.push(id); await saveProgressToCloud(currentUser?.uid, currentProgress); await addXP(xp); showApp(); };
+
+window.logoutUser = async function(){
+  if(firebaseReady){ try{ await signOut(auth); }catch(e){} }
+  localStorage.removeItem('loop_user');
+  location.reload();
+};
+window.resetProgress = async function(){
+  if(!confirm('Do you want to delete all progress?')) return;
+  currentProgress = { level: 1, xp: 0, done: [], streak: 1 };
+  await saveProgressToCloud(currentUser?.uid, currentProgress);
+  showApp();
+};
+window.completeLesson = async function(id, xp){
+  if(currentProgress.done.includes(id)) return alert('You have already completed this lesson!');
+  currentProgress.done.push(id);
+  await saveProgressToCloud(currentUser?.uid, currentProgress);
+  await addXP(xp);
+  showApp();
+};
 
 function updateProgressUI(){
-  const p=currentProgress;
-  if(currentUser) document.getElementById('userName').innerText=currentUser.displayName || currentUser.name || "User";
-  if(currentUser?.email) document.getElementById('userEmail').innerText=currentUser.email;
-  document.getElementById('userLevel').innerText='Level '+p.level;
-  document.getElementById('userXP').innerText=p.xp+' XP';
-  document.getElementById('userStreak').innerText=p.streak;
-  document.getElementById('doneCount').innerText=p.done.length;
-  document.getElementById('xpBar').style.width=(p.xp%100)+'%';
-  let html='';
-  lessons.forEach(l=>{ const d=p.done.includes(l.id); html+=`<div class="lesson-row"><span>${d?'✅':'📚'} ${l.title} <small>(${l.xp} XP)</small></span><button onclick="completeLesson(${l.id}, ${l.xp})" ${d?'disabled':''} style="${d?'background:#444':''}">${d?'Done':'Complete'}</button></div>`; });
-  document.getElementById('lessonList').innerHTML=html;
+  const p = currentProgress;
+  if(currentUser) document.getElementById('userName').innerText = currentUser.displayName || currentUser.name || "User";
+  if(currentUser?.email) document.getElementById('userEmail').innerText = currentUser.email;
+  document.getElementById('userLevel').innerText = 'Level ' + p.level;
+  document.getElementById('userXP').innerText = p.xp + ' XP';
+  document.getElementById('userStreak').innerText = p.streak;
+  document.getElementById('doneCount').innerText = p.done.length;
+  document.getElementById('xpBar').style.width = (p.xp % 100) + '%';
+  let html = '';
+  lessons.forEach(l=>{
+    const isDone = p.done.includes(l.id);
+    html += `<div class="lesson-row"><span>${isDone?'✅':'📚'} ${l.title} <small>(${l.xp} XP)</small></span><button onclick="completeLesson(${l.id}, ${l.xp})" ${isDone?'disabled':''} style="${isDone?'background:#444':''}">${isDone?'Done':'Complete'}</button></div>`;
+  });
+  document.getElementById('lessonList').innerHTML = html;
 }
+
 function showApp(){
   if(currentUser){
     document.getElementById('loginBox').style.display='none';
     document.getElementById('dashboardBox').style.display='block';
-    const nm=currentUser.displayName || currentUser.name || "";
-    if(nm) document.getElementById('fn').value=nm;
+    const nm = currentUser.displayName || currentUser.name || "";
+    if(nm) document.getElementById('fn').value = nm;
     updateProgressUI();
   } else {
     document.getElementById('loginBox').style.display='block';
@@ -286,25 +263,69 @@ function showApp(){
   }
 }
 
-// IMPORTANT FIX: Redirect se wapas aane ke baad result pakdo
+// ===== AUTH STATE =====
 if(firebaseReady){
-  getRedirectResult(auth).then((res)=>{ if(res?.user){ showMsg("Google login success! 🎉", true); } }).catch((e)=>{ showMsg(friendlyError(e)); });
   onAuthStateChanged(auth, async (user)=>{
     if(user){
-      currentUser=user;
-      const cloud=await loadProgressFromCloud(user.uid);
-      const local=getLocalProgress();
+      currentUser = user;
+      // Migrate local progress to cloud if cloud is empty
+      const cloud = await loadProgressFromCloud(user.uid);
+      const local = getLocalProgress();
+      // Keep the higher XP
       currentProgress = (local.xp > (cloud.xp||0)) ? local : cloud;
       if(local.xp > (cloud.xp||0)) await saveProgressToCloud(user.uid, currentProgress);
-      localStorage.setItem('loop_user', JSON.stringify({name:user.displayName||"", email:user.email}));
+      localStorage.setItem('loop_user', JSON.stringify({name: user.displayName||"", email: user.email}));
       showApp();
-    } else { showApp(); }
+    } else {
+      // Check old local login
+      const old = JSON.parse(localStorage.getItem('loop_user')||'null');
+      if(old && !firebaseReady){ currentUser = old; currentProgress = getLocalProgress(); }
+      showApp();
+    }
   });
-} else { showApp(); }
+} else {
+  // No Firebase yet - use old local login
+  const old = JSON.parse(localStorage.getItem('loop_user')||'null');
+  if(old){ currentUser = old; currentProgress = getLocalProgress(); }
+  showApp();
+}
 
-// FEEDBACK
-let fbs=[];
-try{ const s=JSON.parse(localStorage.getItem('loop_feedbacks')||'null'); fbs = (s && s.length) ? s : [{n:'Priya',m:'Great app, fast delivery',s:'Positive'},{n:'Rohit',m:'Delivery was late',s:'Negative'},{n:'Sana',m:'Good quality fruits',s:'Positive'}]; }catch(e){ fbs=[{n:'Priya',m:'Great app, fast delivery',s:'Positive'},{n:'Rohit',m:'Delivery was late',s:'Negative'},{n:'Sana',m:'Good quality fruits',s:'Positive'}]; }
-window.fr=function(){ let q=document.getElementById('fs').value.toLowerCase(); document.getElementById('fb').innerHTML=''; fbs.filter(f=>f.m.toLowerCase().includes(q)||f.n.toLowerCase().includes(q)).forEach(f=>{ document.getElementById('fb').innerHTML+=`<p><b>${f.n}</b> - ${f.m} <span class='badge'>${f.s}</span></p>` }); document.getElementById('fbCount').innerText=1284+fbs.length; };
-window.addF=async function(){ let n=document.getElementById('fn').value||'Guest'; let m=document.getElementById('fm').value; if(!m) return alert('Feedback likho'); fbs.push({n,m,s:'Positive'}); localStorage.setItem('loop_feedbacks', JSON.stringify(fbs)); document.getElementById('fm').value=''; window.fr(); if(currentUser) await addXP(10); };
-window.ask=async function(){ let q=document.getElementById('q').value.toLowerCase(); let a='Based on feedback: 68% Positive. Top theme is delivery speed.'; if(q.includes('issue')) a='Top issue: Delivery delay reported by 12% of users. Fix delivery first.'; if(q.includes('positive')||q.includes('good')) a='68% of users are happy. Most praise is for fast delivery and product quality.'; if(q.includes('suggest')||q.includes('improve')||q.includes('what')) a='1. Fix delivery time 2. Improve q
+// ===== FEEDBACK =====
+let fbs = [];
+try{
+  const savedFbs = JSON.parse(localStorage.getItem('loop_feedbacks')||'null');
+  if(savedFbs && savedFbs.length) fbs = savedFbs;
+  else fbs = [{n:'Priya',m:'Great app, fast delivery',s:'Positive'},{n:'Rohit',m:'Delivery was late',s:'Negative'},{n:'Sana',m:'Good quality fruits',s:'Positive'}];
+}catch(e){ fbs = [{n:'Priya',m:'Great app, fast delivery',s:'Positive'},{n:'Rohit',m:'Delivery was late',s:'Negative'},{n:'Sana',m:'Good quality fruits',s:'Positive'}]; }
+
+window.fr = function(){
+  let q=document.getElementById('fs').value.toLowerCase();
+  document.getElementById('fb').innerHTML='';
+  fbs.filter(f=>f.m.toLowerCase().includes(q)||f.n.toLowerCase().includes(q)).forEach(f=>{
+    document.getElementById('fb').innerHTML+=`<p><b>${f.n}</b> - ${f.m} <span class='badge'>${f.s}</span></p>`
+  });
+  document.getElementById('fbCount').innerText = 1284 + fbs.length;
+};
+window.addF = async function(){
+  let n=document.getElementById('fn').value||'Guest';
+  let m=document.getElementById('fm').value;
+  if(!m) return alert('Please write your feedback first');
+  fbs.push({n,m,s:'Positive'});
+  localStorage.setItem('loop_feedbacks', JSON.stringify(fbs));
+  document.getElementById('fm').value='';
+  window.fr();
+  if(currentUser) await addXP(10);
+};
+window.ask = async function(){
+  let q=document.getElementById('q').value.toLowerCase();
+  let a='Based on feedback: 68% Positive. Top theme is delivery speed.';
+  if(q.includes('issue')) a='Top issue: Delivery delay reported by 12% of users. Fix delivery first.';
+  if(q.includes('positive')||q.includes('good')) a='68% of users are happy. Most praise is for fast delivery and product quality.';
+  if(q.includes('suggest')||q.includes('improve')||q.includes('what')) a='1. Fix delivery time 2. Improve quality checks 3. Ask happy users for reviews.';
+  document.getElementById('ans').innerText='🤖 '+a;
+  if(currentUser) await addXP(5);
+};
+window.fr();
+</script>
+<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script></body>
+</html>
